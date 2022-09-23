@@ -1,0 +1,45 @@
+.card {
+  border: 1px solid #f3f3f3;
+  padding: 20px;
+  width: 210px;
+  border-radius: 25px;
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+  }
+
+  .heartBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+  }
+
+  h5 {
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  .cardImage {
+    width: 133px;
+    height: 112px;
+  }
+
+  .cardBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cardPrice {
+    display: flex;
+    flex-direction: column;
+  }
+  .plusBtn {
+    cursor: pointer;
+  }
+}
