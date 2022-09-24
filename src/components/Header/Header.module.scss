@@ -1,0 +1,47 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  border-bottom: 1px solid #eee;
+
+  .headerLogoBlock {
+    display: flex;
+    align-items: center;
+
+    .headerLogo {
+      margin-right: 20px;
+    }
+
+    .headerLogoText {
+      h3 {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .headerMenu {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    list-style: none;
+    margin-right: 15px;
+    img,
+    a {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:first-of-type {
+      img {
+        margin-right: 10px;
+      }
+    }
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}

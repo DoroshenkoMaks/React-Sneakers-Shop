@@ -1,21 +1,25 @@
 import { useState } from "react";
 import style from "./Card.module.scss";
 
-console.log(style);
-
 export const Card = (props) => {
   const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const onClickAddButton = () => {
-    console.log(isAdded);
     !isAdded && props.onAdd(props);
 
     setIsAdded(!isAdded);
+  };
+  const onClickLikeButton = () => {
+    !isAdded && props.onFavourite(props);
+    setIsFavorite(!isFavorite);
   };
 
   return (
     <div className={style.card}>
       <img
-        src="./img/like-btn-new.svg"
+        onClick={onClickLikeButton}
+        src={`./img/like-btn${isFavorite ? "-clicked" : "-new"}.svg`}
         className={style.heartBtn}
         alt="Unliked"
       />

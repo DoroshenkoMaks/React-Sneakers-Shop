@@ -1,56 +1,81 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Card } from "./components/Card/Card";
-import { Drawer } from "./components/Cart/Drawer";
-import { Header } from "./components/Header";
+import { Drawer } from "./components/Drawer/Drawer";
+import { Header } from "./components/Header/Header";
+import { Routes, Route } from "react-router-dom";
+import axios from "axios";
+import { MainContent } from "./components/MainContent/MainContent";
+import { Favorites } from "./components/Favorites/Favorites";
 
 function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
 
+  const [favorites, setFavorites] = useState([]);
+
   useEffect(() => {
-    fetch("https://6320b3ff82f8687273a5fd7c.mockapi.io/items")
-      .then((res) => res.json())
-      .then((json) => setItems(json));
+    axios
+      .get("https://6320b3ff82f8687273a5fd7c.mockapi.io/items")
+      .then((res) => setItems(res.data));
+
+    axios
+      .get("https://6320b3ff82f8687273a5fd7c.mockapi.io/cart")
+      .then((res) => setCartItems(res.data));
+
+    axios
+      .get("https://6320b3ff82f8687273a5fd7c.mockapi.io/favourites")
+      .then((res) => setFavorites(res.data));
   }, []);
 
   const onAddToCart = (content) => {
-    console.log(content);
     setCartItems((prev) => [...prev, content]);
+
+    axios.post("https://6320b3ff82f8687273a5fd7c.mockapi.io/cart", content);
+  };
+
+  const onAddToFavorite = (content) => {
+    axios.post(
+      "https://6320b3ff82f8687273a5fd7c.mockapi.io/favourites",
+      content
+    );
+    setFavorites((prev) => [...prev, content]);
+  };
+
+  const onRemoveItemCart = (id) => {
+    axios.delete(`https://6320b3ff82f8687273a5fd7c.mockapi.io/cart/${id}`);
+
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
     <div className="wrapper">
       {cartOpened && (
-        <Drawer items={cartItems} onClose={() => setCartOpened(false)} />
+        <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItemCart}
+        />
       )}
 
       <Header onClickCart={() => setCartOpened(true)} />
 
-      <div className="content">
-        <div className="content__header">
-          <h1>All Sneakers</h1>
-          <div className="search">
-            <img src="./img/search.svg" alt="Search icon" />
-            <input placeholder="Find..." />
-          </div>
-        </div>
-
-        <div className="sneakers">
-          {items.map((item, i) => {
-            return (
-              <Card
-                imgLink={item.imgLink}
-                cardName={item.name}
-                cardPrice={item.price}
-                key={i}
-                onAdd={onAddToCart}
-              />
-            );
-          })}
-        </div>
-      </div>
+      <Routes>
+        <Route
+          path="/favorites"
+          element={<Favorites favorites={favorites} />}
+        />
+        <Route
+          path="/"
+          element={
+            <MainContent
+              items={items}
+              onAdd={onAddToCart}
+              onFavourite={onAddToFavorite}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
