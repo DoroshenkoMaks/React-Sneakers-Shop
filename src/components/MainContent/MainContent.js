@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Card } from "./Card/Card";
-import style from "./MainContent.module.scss";
 
 export const MainContent = (props) => {
   const [searchValue, setSearchValue] = useState("");
@@ -10,17 +9,17 @@ export const MainContent = (props) => {
   };
 
   return (
-    <div className={style.content}>
-      <div className={style.contentHeader}>
+    <div className="content">
+      <div className="contentHeader">
         <h1>
           {searchValue ? `Search by filter: ${searchValue}` : `All Sneakers`}
         </h1>
-        <div className={style.contentSearch}>
+        <div className="contentSearch">
           <img src="./img/search.svg" alt="Search icon" />
           {searchValue && (
             <img
               src="./img/btn-remove.svg"
-              className={style.contentClearInputButton}
+              className="contentClearInputButton"
               alt="Clear input"
               onClick={() => setSearchValue("")}
             />
@@ -33,7 +32,7 @@ export const MainContent = (props) => {
         </div>
       </div>
 
-      <div className={style.sneakers}>
+      <div className="contentItems">
         {props.items
           .filter((item) => item.name.toLowerCase().includes(searchValue))
           .map((item, i) => {

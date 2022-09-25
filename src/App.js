@@ -25,7 +25,10 @@ function App() {
 
     axios
       .get("https://6320b3ff82f8687273a5fd7c.mockapi.io/favourites")
-      .then((res) => setFavorites(res.data));
+      .then((res) => {
+        console.log("We get favorites");
+        setFavorites(res.data);
+      });
   }, []);
 
   const onAddToCart = (content) => {
@@ -75,6 +78,7 @@ function App() {
             />
           }
         />
+        <Route path="/order" element={<div>Order</div>} />
       </Routes>
     </div>
   );

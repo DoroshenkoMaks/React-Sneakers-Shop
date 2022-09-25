@@ -26,7 +26,10 @@ export const Drawer = ({ onClose, items = [], onRemove }) => {
             />
             <h2>Cart Empty</h2>
             <p>Add sneakers to make a order</p>
-            <button onClick={onClose} className="greenButton">
+            <button
+              onClick={onClose}
+              className={`greenButton ${style.greenButton}`}
+            >
               <img src="/img/arrow-left.svg" alt="Arrow" />
               Come back
             </button>
